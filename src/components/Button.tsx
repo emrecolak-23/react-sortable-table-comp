@@ -11,7 +11,7 @@ const Button = (props: any) => {
     )
 
 
-    return <button className={classes}>
+    return <button className={classes} onClick={props.onClick}>
         {props.children}
     </button>
 }

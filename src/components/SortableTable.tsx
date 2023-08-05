@@ -5,9 +5,10 @@ import Table from './Table'
 const SortableTable = (props: any) => {
 
 
-    const { config, data } = props
+    const { config, allData, offset,  itemsPerpage} = props
 
-    const { sortBy, sortOrder, setSortColumn, sortedData } = useSort(data, config)
+    const { sortBy, sortOrder, setSortColumn, sortedData } = useSort(allData, config)
+    const pageData = sortedData.slice(offset, offset + itemsPerpage)
 
     const updatedConfig = config.map((column: any) => {
         if (!column.sortValue) {
@@ -67,7 +68,7 @@ const SortableTable = (props: any) => {
 
     return (
         <div className='w-full'>
-            <Table {...props} data={sortedData} config={updatedConfig} />
+            <Table {...props} data={pageData} config={updatedConfig} />
         </div>
     )
 

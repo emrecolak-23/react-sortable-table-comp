@@ -1,5 +1,4 @@
 import Panel from "./components/Panel"
-import incoss from './assets/incoss.png'
 import SortableTable from "./components/SortableTable"
 import Button from "./components/Button"
 import { BsDownload } from 'react-icons/bs'
@@ -18,7 +17,6 @@ const App = () => {
   }
 
   const offset = page * itemsPerpage
-  const pageData = data.slice(offset, offset + itemsPerpage)
   const pageCount = Math.ceil(data.length / itemsPerpage)
 
   const config = [
@@ -74,9 +72,15 @@ const App = () => {
     },
     {
       label: 'Herunterladen',
-      render: () => <div className=""><Button download={true}><BsDownload className="text-white" /></Button></div>,
+      render: () => <div className=""><Button download={true} onClick={handleDownload}><BsDownload className="text-white" /></Button></div>,
     },
   ]
+
+  const handleDownload = () => {
+    
+    const pdfUrl = 'http://incoss.de/wp-content/test/dist/assets/cv-form.pdf';
+    window.location.href = pdfUrl
+  }
 
   const keyFn = (key: any) => {
     return key
@@ -84,9 +88,9 @@ const App = () => {
 
   return <div className="h-screen bg-white px-10 py-10">
     <div className="h-full flex-col items-center justify-between">
-      <img className="h-12 w-62 mb-12" src={incoss} />
+      <img className="h-12 w-62 mb-12" src="https://incoss.de/wp-content/test/dist/assets/incoss-273799de.png" />
       <Panel className="w-full h-max bg-[#f0f2fc] rounded-2xl">
-        <SortableTable data={pageData} config={config} keyFn={keyFn} />
+        <SortableTable offset={offset} itemsPerpage={itemsPerpage} config={config} allData={data} keyFn={keyFn} />
         <div className="w-full flex items-center justify-center">
           <ReactPaginate
             breakLabel="..."
