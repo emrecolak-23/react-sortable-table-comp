@@ -78,8 +78,8 @@ const App = () => {
     },
   ]
 
-  const keyFn = (fruit: any) => {
-    return fruit.name
+  const keyFn = (key: any) => {
+    return key
   }
 
   return <div className="h-screen bg-white px-10 py-10">

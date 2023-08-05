@@ -10,7 +10,7 @@ const Table = (props:any) => {
         return <th className="font-sans text-sm font-bold w-1/12" key={column.label}>{column.label}</th>
     })
 
-    const renderedRows = props.data.map((rowData: any) => {
+    const renderedRows = props.data.map((rowData: any, index: number) => {
         const renderedCell = props.config.map((column: any) => {
             return (
                 <td className="p-3 m-2 text-sm" key={column.label}>
@@ -20,7 +20,7 @@ const Table = (props:any) => {
         })
 
         return (
-            <tr className="border-b-8 border-b-[#f0f2fc]" key={props.keyFn(rowData)}>
+            <tr className="rounded-lg border-b-8 border-b-[#f0f2fc] bg-white" key={props.keyFn(index)}>
                 {renderedCell}
             </tr>
         )
@@ -34,7 +34,7 @@ const Table = (props:any) => {
                         {renderedHeaders}
                     </tr>
                 </thead>
-                <tbody className="h-full bg-white rounded-md">
+                <tbody className="h-full">
                     {renderedRows}
                 </tbody>
             </table>
