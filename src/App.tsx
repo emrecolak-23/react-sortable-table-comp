@@ -5,19 +5,34 @@ import { BsDownload } from 'react-icons/bs'
 import ReactPaginate from 'react-paginate'
 import { data } from './utils/data'
 import { useState } from "react"
-
+import CustomCombobox from "./components/Dropdown"
+import { sectors } from "./utils/sectors"
 const itemsPerpage = 6
 
 const App = () => {
 
   const [page, setPage] = useState(1)
+  const [allData, setAllData] = useState(data)
+  
+
+  const handleSelectSector = (sector: string) => {
+    if(sector === 'Alle') {
+      setAllData(data)
+      return
+    }
+    const selectedData = data.filter(data => {
+      return data.sector === sector
+    })
+    setAllData(selectedData)
+  }
+
 
   const handlePageClick = ({selected}:any) => {
     setPage(selected)
   }
 
   const offset = page * itemsPerpage
-  const pageCount = Math.ceil(data.length / itemsPerpage)
+  const pageCount = Math.ceil(allData.length / itemsPerpage)
 
   const config = [
     {
@@ -87,10 +102,11 @@ const App = () => {
   }
 
   return <div className="h-screen bg-white px-10 py-10">
-    <div className="h-full flex-col items-center justify-between">
-      <img className="h-12 w-62 mb-12" src="https://incoss.de/wp-content/test/dist/assets/incoss-273799de.png" />
+    <div className="h-full flex-col items-center justify-between gap-2">
+      <img className="h-12 w-62 mb-12" src="https://incoss.de/wp-content/test/dist/assets/incoss-273799de.png" />      
+      <CustomCombobox sectors={sectors} handleSelectSector={handleSelectSector} />
       <Panel className="w-full h-max bg-[#f0f2fc] rounded-2xl">
-        <SortableTable offset={offset} itemsPerpage={itemsPerpage} config={config} allData={data} keyFn={keyFn} />
+        <SortableTable offset={offset} itemsPerpage={itemsPerpage} config={config} allData={allData} keyFn={keyFn} />
         <div className="w-full flex items-center justify-center">
           <ReactPaginate
             breakLabel="..."

@@ -8,7 +8,14 @@ const SortableTable = (props: any) => {
     const { config, allData, offset,  itemsPerpage} = props
 
     const { sortBy, sortOrder, setSortColumn, sortedData } = useSort(allData, config)
-    const pageData = sortedData.slice(offset, offset + itemsPerpage)
+    let pageData;
+
+    if(allData.length < offset) {
+        pageData = sortedData
+    } else {
+        pageData = sortedData.slice(offset, offset + itemsPerpage)
+
+    }
 
     const updatedConfig = config.map((column: any) => {
         if (!column.sortValue) {
